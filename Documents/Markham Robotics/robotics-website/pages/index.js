@@ -9,9 +9,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>My Next App</title>
-        <meta name="description" content="My Next App" />
-        <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content="Markham Robotics" />
       </Head>
 
       <main className={styles.main}>
@@ -37,15 +35,25 @@ export default function Home() {
             <div className={styles.subColumn1}>
               <h2 className={styles.titles}><u>ANALYTICS</u></h2>
               <p>This is the first sub-column of the second column.</p>
+              {(metricStats.length == 0) &&
+                <div className={styles.analyticsContainer}>
+                <Metrics metric={"--"} />
+                <Metrics metric={"--"} />
+                <Metrics metric={"--"} />
+                </div>
+              }
               {(metricStats.length == 1) &&
                 <div className={styles.analyticsContainer}>
                 <Metrics metric={metricStats[metricStats.length - 1]} />
+                <Metrics metric={"--"} />
+                <Metrics metric={"--"} />
                 </div>
               }
               {(metricStats.length == 2) &&
                 <div className={styles.analyticsContainer}>
                 <Metrics metric={metricStats[metricStats.length - 1]} />
               <Metrics metric={metricStats[metricStats.length - 2]}/>
+              <Metrics metric={"--"} />
                 </div>
               }
               {(metricStats.length > 2) &&
