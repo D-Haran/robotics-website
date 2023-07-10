@@ -6,6 +6,7 @@ import { motion } from "framer-motion"
 
 export default function Home() {
   const [metricStats, setMetricStats] = useState([])
+  const [role, setRole] = useState("editor")
 
   return (
     <div className={styles.container}>
@@ -18,7 +19,10 @@ export default function Home() {
           <h2 className={styles.titles}><u>MORE METRICS</u></h2>
           <p>This is the first column.</p>
           <div className={styles.metricContainer}>
-          <div className={styles.addMetric} onClick={() => {setMetricStats(metricStats => ([...metricStats,metricStats.length+1]))}}>+</div>
+          {role == "editor" &&
+            <motion.div className={styles.addMetric} animate={{scale: 1}} transition={{ delay: 0.01 }}
+            initial={{scale:0.5}} onClick={() => {setMetricStats(metricStats => ([...metricStats,metricStats.length+1]))}}>+</motion.div>
+        }
           {metricStats.map((item, idx) => {
             return(
               <motion.div className={styles.gridStat} key={idx} animate={{scale: 1}}
@@ -31,7 +35,7 @@ export default function Home() {
         </div>
 
         <div className={styles.column}>
-        <select className={styles.dropdown}>
+        <select className={styles.dropdown}onChange={(e) => {setRole(e.target.value)}}>
             <option value="editor">Editor</option>
             <option value="viewer">Viewer</option>
           </select>
