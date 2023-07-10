@@ -7,6 +7,7 @@ import { motion } from "framer-motion"
 export default function Home() {
   const [metricStats, setMetricStats] = useState([])
   const [role, setRole] = useState("editor")
+  const [collapsible, setcollapsible] = useState(false)
 
   return (
     <div className={styles.container}>
@@ -83,6 +84,11 @@ export default function Home() {
           </div>
         </div>
 
+<button onClick={() => {setCollapsible(!collapsible)}}>
+Collapse
+</button>
+{
+collabsible == false &&
         <div className={styles.column3}>
           <h2 className={styles.titles}><u>EDIT ANALYTICS</u></h2>
           <p>This is the third column.</p>
@@ -102,6 +108,7 @@ export default function Home() {
           </ul>
           
         </div>
+}
       </main>
     </div>
   )
