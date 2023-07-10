@@ -83,10 +83,13 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-        <button onClick={() => {setCollapsible(!collapsible)}}>
-        Collapse
-        </button>
+        {
+          role == "editor" &&
+          <Fragment>   
+        
+            <button onClick={() => {setCollapsible(!collapsible)}}>
+            Collapse
+            </button>
 
           {
             collapsible == false &&
@@ -109,6 +112,8 @@ export default function Home() {
             </ul>
             
           </div>
+          }
+      </Fragment>
           }
       </main>
     </div>
