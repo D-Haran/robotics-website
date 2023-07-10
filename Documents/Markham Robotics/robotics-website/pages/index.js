@@ -7,6 +7,7 @@ import { motion } from "framer-motion"
 export default function Home() {
   const [metricStats, setMetricStats] = useState([])
   const [role, setRole] = useState("editor")
+  const [collapsible, setCollapsible] = useState(false)
 
   return (
     <div className={styles.container}>
@@ -83,25 +84,32 @@ export default function Home() {
           </div>
         </div>
 
-        <div className={styles.column3}>
-          <h2 className={styles.titles}><u>EDIT ANALYTICS</u></h2>
-          <p>This is the third column.</p>
-          <ul className={styles.table}>
-          {metricStats.map((item, idx) => {
-            return(
-                <motion.li 
-                animate={{scale: 1}}
-                initial={{scale:0.95}}
-                className={styles.indieStat} key={idx}>
-                  <div className={styles.tableElement}>
-                    {item}
-                  </div>
-                </motion.li>
-            )
-          })}
-          </ul>
-          
-        </div>
+        <button onClick={() => {setCollapsible(!collapsible)}}>
+        Collapse
+        </button>
+
+          {
+            collapsible == false &&
+            <div className={styles.column3}>
+            <h2 className={styles.titles}><u>EDIT ANALYTICS</u></h2>
+            <p>This is the third column.</p>
+            <ul className={styles.table}>
+            {metricStats.map((item, idx) => {
+              return(
+                  <motion.li 
+                  animate={{scale: 1}}
+                  initial={{scale:0.95}}
+                  className={styles.indieStat} key={idx}>
+                    <div className={styles.tableElement}>
+                      {item}
+                    </div>
+                  </motion.li>
+              )
+            })}
+            </ul>
+            
+          </div>
+          }
       </main>
     </div>
   )
