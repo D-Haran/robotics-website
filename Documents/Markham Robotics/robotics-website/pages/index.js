@@ -2,6 +2,7 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Metrics from '../components/metrics'
 import { useState } from 'react'
+import { motion } from "framer-motion"
 
 export default function Home() {
   const [metricStats, setMetricStats] = useState([])
@@ -20,7 +21,10 @@ export default function Home() {
           <div className={styles.addMetric} onClick={() => {setMetricStats(metricStats => ([...metricStats,metricStats.length+1]))}}>+</div>
           {metricStats.map((item, idx) => {
             return(
-              <Metrics metric={item} key={idx}/>
+              <motion.div className={styles.gridStat} key={idx} animate={{scale: 1}}
+              initial={{scale:0.75}}>
+                <Metrics metric={item}/>
+              </motion.div>
             )
           })}
           </div>
@@ -80,9 +84,12 @@ export default function Home() {
           <p>This is the third column.</p>
           {metricStats.map((item, idx) => {
             return(
-              <div className={styles.indieStat} key={idx}>
+              <motion.div 
+              animate={{scale: 1}}
+              initial={{scale:0.95}}
+              className={styles.indieStat} key={idx}>
               - {item}
-              </div>
+              </motion.div>
             )
           })}
         </div>
