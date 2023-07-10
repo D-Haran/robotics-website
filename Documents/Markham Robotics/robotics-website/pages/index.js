@@ -1,8 +1,9 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Metrics from '../components/metrics'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { motion } from "framer-motion"
+
 
 export default function Home() {
   const [metricStats, setMetricStats] = useState([])
@@ -83,10 +84,13 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-        <button onClick={() => {setCollapsible(!collapsible)}}>
-        Collapse
-        </button>
+        {
+          role == "editor" &&
+          <Fragment>   
+        
+            <button onClick={() => {setCollapsible(!collapsible)}}>
+            Collapse
+            </button>
 
           {
             collapsible == false &&
@@ -109,6 +113,8 @@ export default function Home() {
             </ul>
             
           </div>
+          }
+      </Fragment>
           }
       </main>
     </div>
