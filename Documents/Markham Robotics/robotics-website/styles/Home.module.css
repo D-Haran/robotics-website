@@ -144,7 +144,12 @@
   padding: 1%;
   background-color: #fff;
   border-radius: 5px;
-  color: #000;
+  color: #fff;
   margin: 2%;
+  width: 90%;
   cursor: pointer;
+}
+
+.tableElement {
+  color: #000;
 }

@@ -82,16 +82,21 @@ export default function Home() {
         <div className={styles.column3}>
           <h2 className={styles.titles}><u>EDIT ANALYTICS</u></h2>
           <p>This is the third column.</p>
+          <ul className={styles.table}>
           {metricStats.map((item, idx) => {
             return(
-              <motion.div 
-              animate={{scale: 1}}
-              initial={{scale:0.95}}
-              className={styles.indieStat} key={idx}>
-              - {item}
-              </motion.div>
+                <motion.li 
+                animate={{scale: 1}}
+                initial={{scale:0.95}}
+                className={styles.indieStat} key={idx}>
+                  <div className={styles.tableElement}>
+                    {item}
+                  </div>
+                </motion.li>
             )
           })}
+          </ul>
+          
         </div>
       </main>
     </div>
