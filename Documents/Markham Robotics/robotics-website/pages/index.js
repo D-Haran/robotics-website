@@ -1,8 +1,9 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Metrics from '../components/metrics'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { motion } from "framer-motion"
+
 
 export default function Home() {
   const [metricStats, setMetricStats] = useState([])
@@ -83,33 +84,37 @@ export default function Home() {
             </div>
           </div>
         </div>
+        {
+          role == "editor" &&
+          <Fragment>
+            <button onClick={() => {setCollapsible(!collapsible)}}>
+              Collapse
+              </button>
 
-        <button onClick={() => {setCollapsible(!collapsible)}}>
-        Collapse
-        </button>
-
-          {
-            collapsible == false &&
-            <div className={styles.column3}>
-            <h2 className={styles.titles}><u>EDIT ANALYTICS</u></h2>
-            <p>This is the third column.</p>
-            <ul className={styles.table}>
-            {metricStats.map((item, idx) => {
-              return(
-                  <motion.li 
-                  animate={{scale: 1}}
-                  initial={{scale:0.95}}
-                  className={styles.indieStat} key={idx}>
-                    <div className={styles.tableElement}>
-                      {item}
-                    </div>
-                  </motion.li>
-              )
-            })}
-            </ul>
-            
-          </div>
-          }
+                {
+                  collapsible == false &&
+                  <div className={styles.column3}>
+                  <h2 className={styles.titles}><u>EDIT ANALYTICS</u></h2>
+                  <p>This is the third column.</p>
+                  <ul className={styles.table}>
+                  {metricStats.map((item, idx) => {
+                    return(
+                        <motion.li 
+                        animate={{scale: 1}}
+                        initial={{scale:0.95}}
+                        className={styles.indieStat} key={idx}>
+                          <div className={styles.tableElement}>
+                            {item}
+                          </div>
+                        </motion.li>
+                    )
+                  })}
+                  </ul>
+                  
+                </div>
+                }
+          </Fragment>
+        }
       </main>
     </div>
   )
