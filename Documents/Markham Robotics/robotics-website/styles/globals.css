@@ -24,3 +24,10 @@ a {
     background: black;
   }
 }
+
+html::-webkit-scrollbar {
+  display: none;               /* width of the entire scrollbar */
+}
+body::-webkit-scrollbar {
+  display: none;               /* width of the entire scrollbar */
+}
