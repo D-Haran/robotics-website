@@ -99,13 +99,12 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <AnimatePresence>
         {
           role == "editor" &&
           <Fragment>
             {
               collapsible == false &&
-              <motion.div className={styles.column3} animate={{x: 0}} initial={{x:"50%"}} exit={{x:"100%"}}>
+              <motion.div className={styles.column3} animate={{x: 0}} initial={{x:"50%"}}>
               <motion.button onClick={() => {setCollapsible(!collapsible)}} className={styles.collapse}  animate={{scale: 1}}
               initial={{scale:0}}>
               <span class="material-symbols-outlined">
@@ -113,32 +112,31 @@ export default function Home() {
               </span>
                 </motion.button>
 
-                  
-                    <div>
+                  <Fragment>
                     <h2 className={styles.titles}><u>EDIT ANALYTICS</u></h2>
-                    <p>This is the third column.</p>
-                    <ul className={styles.table}>
-                    {metricStats.map((item, idx) => {
-                      return(
-                          <motion.li 
-                          animate={{scale: 1}}
-                          initial={{scale:0.95}}
-                          className={styles.indieStat} key={idx}>
-                            <div className={styles.tableElement}>
-                              {item}
-                            </div>
-                          </motion.li>
-                      )
-                    })}
-                    </ul>
+                      <p>This is the third column.</p>
+                      <ul className={styles.table}>
+                      {metricStats.map((item, idx) => {
+                        return(
+                            <motion.li 
+                            animate={{scale: 1}}
+                            initial={{scale:0.95}}
+                            className={styles.indieStat} key={idx}>
+                              <div className={styles.tableElement}>
+                                {item}
+                              </div>
+                            </motion.li>
+                        )
+                      })}
+                      </ul>
+                  </Fragment>
                     
-                  </div>
+                    
                   
             </motion.div>}
           </Fragment>
           
         }
-        </AnimatePresence>
         
       </main>
     </div>
