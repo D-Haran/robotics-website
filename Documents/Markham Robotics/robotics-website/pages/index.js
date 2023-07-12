@@ -30,7 +30,8 @@ export default function Home() {
           {metricStats.map((item, idx) => {
             return(
               <motion.div className={styles.gridStat} key={idx} animate={{scale: 1}}
-              initial={{scale:0.75}}>
+              initial={{scale:0.75}} whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}>
                 <Metrics metric={item}/>
               </motion.div>
             )
