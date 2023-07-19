@@ -4,7 +4,7 @@ import Metrics from '../components/metrics'
 import { Fragment, useEffect, useState } from 'react'
 import { motion } from "framer-motion"
 import Modal from 'react-modal';
-import { collection, getDocs, doc, setDoc, addDoc, getDoc, getCountFromServer, updateDoc } from "firebase/firestore";
+import { collection, getDocs, doc, setDoc, addDoc, getDoc, getCountFromServer, updateDoc, deleteDoc } from "firebase/firestore";
 import {auth, db} from '../firebase'
 
 
@@ -34,6 +34,10 @@ export default function Home() {
     },
   };
 
+  const renewTeams = () => {
+      setRenew(!renew)
+  }
+
   function openModal() {
     setIsOpen(true);
   }
@@ -44,12 +48,12 @@ export default function Home() {
   }
 
   const getTeamData = async(teamNumber) => {
-    const docRef = doc(db, 'teams', '6866', 'other_teams', teamNumber);
-    const docSnap = await getDoc(docRef);
-    const data = docSnap.data()
-    data['teamNumber'] = docSnap.id
-    setTeamData(data)
-    setCollapsible(false)
+      const docRef = doc(db, 'teams', '6866', 'other_teams', teamNumber);
+      const docSnap = await getDoc(docRef);
+      const data = docSnap.data()
+      data['teamNumber'] = docSnap.id
+      setTeamData(data)
+      setCollapsible(false)    
   }
   const getTeams = async(teamNumber) => {
     const collectionRef = collection(db, 'teams', teamNumber, 'other_teams');
@@ -72,9 +76,9 @@ export default function Home() {
 
   const removeTeam = async(teamNumber) => {
     const docRef = doc(db, 'teams', '6866', 'other_teams', teamNumber);
-    await setDoc(docRef, {
-      test: "test"
-    });
+    await deleteDoc(docRef);
+    setTeamData({})
+    setCollapsible(true)
     setRenew(!renew)
   }
 
@@ -123,7 +127,7 @@ export default function Home() {
               <motion.div className={styles.gridStat} key={idx} animate={{scale: 1}}
               initial={{scale:0.75}} whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }} onClick={() => {getTeamData(item)}}>
-                <Metrics metric={item}/>
+                <Metrics metric={item} renew={renewTeams}/>
               </motion.div>
             )
           })}
@@ -228,7 +232,14 @@ export default function Home() {
                             
                           })}
                           </ul>
-                          <button className={styles.addMetric} onClick={() => {setAddMetricModal(true)}}>+</button>
+                          {teamData.teamNumber &&
+                            <Fragment>
+                              <button className={styles.addMetric} onClick={() => {setAddMetricModal(true)}}>+</button>
+                              <button onClick={()=>{removeTeam(teamData.teamNumber)}}>Remove Team</button>                            
+                            </Fragment>
+
+                          }
+                          
                       </Fragment>
                         
                       <Modal

@@ -81,6 +81,10 @@
     justify-content: center;
 }
 
+.gridStat:hover .removeTeam{
+  display: block;
+}
+
 .metricContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -109,7 +113,7 @@
         -o-user-select: none;
 }
 .addMetric:hover {
-  border: solid 1px rgb(255, 179, 0);
+  border: solid 1px #21C531;
   color: rgb(255, 255, 255);
 }
 
@@ -189,4 +193,11 @@
 
 .addMetric:hover {
   box-shadow: 0 0 20px #21C531; /* Green shadow on hover */
+}
+
+.removeTeam {
+  position: relative;
+  top: 0;
+  right: 0;
+  display: none;
 }

@@ -19,6 +19,20 @@ border: 1px solid rgba(0, 0, 0, 0.18);
     
 }
 
+.container:hover .removeTeam{
+        display: block;
+}
+
+.removeTeam {
+        display: none;
+        position: absolute;
+        top: -6px;
+        left: -3px;
+        /* background-color: grey; */
+        padding: 1%;
+        border-radius: 5px;
+}
+
 @keyframes container {
     0% {
       -webkit-transform: translateZ(0);
