@@ -9,9 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "firebase": "^10.0.0",
+    "firebase": "^8.6.8",
     "framer-motion": "^10.12.18",
     "next": "13.4.9",
+    "protobufjs": "^7.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-modal": "^3.16.1"
