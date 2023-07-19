@@ -49,7 +49,7 @@ export default function Home() {
     const data = docSnap.data()
     data['teamNumber'] = docSnap.id
     setTeamData(data)
-    console.log(docSnap)
+    setCollapsible(false)
   }
   const getTeams = async(teamNumber) => {
     const collectionRef = collection(db, 'teams', teamNumber, 'other_teams');
@@ -114,7 +114,7 @@ export default function Home() {
         contentLabel="Example Modal"
       >
         <h2>Enter Team Number</h2>
-        <input onChange={(e) => {setTeamNumber(e.target.value); console.log(e.target.value)}} placeholder='TEAM NUMBER'/>
+        <input maxLength={5} onChange={(e) => {setTeamNumber(e.target.value); console.log(e.target.value)}} placeholder='TEAM NUMBER'/>
         <button onClick={() => {addTeam(teamNumber); closeModal()}}>Submit</button>
       </Modal>
           {teamNumberList.map((item, idx) => {
@@ -122,7 +122,7 @@ export default function Home() {
             return(
               <motion.div className={styles.gridStat} key={idx} animate={{scale: 1}}
               initial={{scale:0.75}} whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }} onClick={() => getTeamData(item)}>
+              whileTap={{ scale: 0.9 }} onClick={() => {getTeamData(item)}}>
                 <Metrics metric={item}/>
               </motion.div>
             )
@@ -194,53 +194,60 @@ export default function Home() {
         {
           role == "editor" &&
           <Fragment>
-            {
-              collapsible == false &&
-              <motion.div className={styles.column3} animate={{x: 0}} initial={{x:"50%"}}>
-              <motion.button onClick={() => {setCollapsible(!collapsible)}} className={styles.collapse}  animate={{scale: 1}}
-              initial={{scale:0}}>
-              <span class="material-symbols-outlined">
-              arrow_forward_ios
-              </span>
-                </motion.button>
+          {
+            teamData != null &&
+            <Fragment>
+                {
+                  collapsible == false &&
+                  <motion.div className={styles.column3} animate={{x: 0}} initial={{x:"50%"}}>
+                  <motion.button onClick={() => {setCollapsible(!collapsible)}} className={styles.collapse}  animate={{scale: 1}}
+                  initial={{scale:0}}>
+                  <span class="material-symbols-outlined">
+                  arrow_forward_ios
+                  </span>
+                    </motion.button>
 
-                  <Fragment>
-                    <h2 className={styles.titles}><u>EDIT ANALYTICS</u></h2>
-                      <p>This is the third column.</p>
-                      <ul className={styles.table}>
-                      {teamData &&
-                        Object.keys(teamData).map((item, idx) => {
-                          if (item != "test") {
-                            return(
-                            <motion.li 
-                            animate={{scale: 1}}
-                            initial={{scale:0.95}}
-                            className={styles.indieStat} key={idx}>
-                              <div className={styles.tableElement}>
-                                {item}: {teamData[item]}
-                              </div>
-                            </motion.li>
-                        )
-                          }
+                      <Fragment>
+                        <h2 className={styles.titles}><u>EDIT ANALYTICS</u></h2>
+                          <p>This is the third column.</p>
+                          <ul className={styles.table}>
+                          {teamData &&
+                            Object.keys(teamData).map((item, idx) => {
+                              if (item != "test") {
+                                return(
+                                <motion.li 
+                                animate={{scale: 1}}
+                                initial={{scale:0.95}}
+                                className={styles.indieStat} key={idx}>
+                                  <div className={styles.tableElement}>
+                                    {item}: {teamData[item]}
+                                  </div>
+                                </motion.li>
+                            )
+                              }
+                            
+                          })}
+                          </ul>
+                          <button className={styles.addMetric} onClick={() => {setAddMetricModal(true)}}>+</button>
+                      </Fragment>
                         
-                      })}
-                      </ul>
-                      <button className={styles.addMetric} onClick={() => {setAddMetricModal(true)}}>+</button>
-                  </Fragment>
-                    
-                  <Modal
-                  isOpen={addMetricModal}
-                  onRequestClose={() => {setAddMetricModal(false)}}
-                  style={customStyles}
-                  contentLabel="Example Modal"
-                  >
-                      <input onChange={(e) => {setMetricLabel(e.target.value)}} placeholder='METRIC Label'/>
-                      <input onChange={(e) => {setMetricValue(e.target.value)}} placeholder='METRIC Value'/>
-                      <button onClick={()=>{addMetricToTeam(teamData.teamNumber, metricLabel, metricValue); setAddMetricModal(false)}}>Submit</button>
-                  </Modal>
-                  
-            </motion.div>}
+                      <Modal
+                      isOpen={addMetricModal}
+                      onRequestClose={() => {setAddMetricModal(false)}}
+                      style={customStyles}
+                      contentLabel="Example Modal"
+                      >
+                          <input onChange={(e) => {setMetricLabel(e.target.value)}} placeholder='METRIC Label'/>
+                          <input onChange={(e) => {setMetricValue(e.target.value)}} placeholder='METRIC Value'/>
+                          <button onClick={()=>{addMetricToTeam(teamData.teamNumber, metricLabel, metricValue); setAddMetricModal(false)}}>Submit</button>
+                      </Modal>
+                      
+                </motion.div>}
+              </Fragment>
+          }
+            
           </Fragment>
+          
           
         }
         
