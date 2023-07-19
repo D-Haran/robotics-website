@@ -1,14 +1,94 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Metrics from '../components/metrics'
-import { Fragment, useState } from 'react'
-import { motion, AnimatePresence } from "framer-motion"
+import { Fragment, useEffect, useState } from 'react'
+import { motion } from "framer-motion"
+import Modal from 'react-modal';
+import { collection, getDocs, doc, setDoc, addDoc, getDoc, getCountFromServer, updateDoc } from "firebase/firestore";
+import {auth, db} from '../firebase'
 
 
 export default function Home() {
   const [metricStats, setMetricStats] = useState([])
+  var teams = {}
   const [role, setRole] = useState("editor")
   const [collapsible, setCollapsible] = useState(false)
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [teamNumber, setTeamNumber] = useState(0);
+  const [teamData, setTeamData] = useState(null)
+  const [renew, setRenew] = useState(true)
+  const [teamNumberList, setTeamNumberList] = useState([])
+  const [addMetricModal, setAddMetricModal] = useState(false)
+  const [metricLabel, setMetricLabel] = useState("")
+  const [metricValue, setMetricValue] = useState("")
+
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      background: 'black',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  const getTeamData = async(teamNumber) => {
+    const docRef = doc(db, 'teams', '6866', 'other_teams', teamNumber);
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.data()
+    data['teamNumber'] = docSnap.id
+    setTeamData(data)
+    console.log(docSnap)
+  }
+  const getTeams = async(teamNumber) => {
+    const collectionRef = collection(db, 'teams', teamNumber, 'other_teams');
+    const docSnap = await getDocs(collectionRef);
+    
+    docSnap.forEach(doc => {
+      console.log(doc.id);
+      teams[doc.id] = doc.data()
+      setTeamNumberList(Object.keys(teams))
+    })
+  }
+
+  const addTeam = async(teamNumber) => {
+    const docRef = doc(db, 'teams', '6866', 'other_teams', teamNumber);
+    await setDoc(docRef, {
+      test: "test"
+    });
+    setRenew(!renew)
+  }
+
+  const removeTeam = async(teamNumber) => {
+    const docRef = doc(db, 'teams', '6866', 'other_teams', teamNumber);
+    await setDoc(docRef, {
+      test: "test"
+    });
+    setRenew(!renew)
+  }
+
+  const addMetricToTeam = async(teamNumber, label, value) => {
+    const docRef = doc(db, 'teams', '6866', 'other_teams', teamNumber);
+    await updateDoc(docRef, {
+      [label]: value
+    });
+    getTeamData(teamNumber)
+  }
+
+  useEffect(() => {
+    getTeams('6866')
+  }, [renew])
 
   return (
     <div className={styles.container}>
@@ -20,18 +100,29 @@ export default function Home() {
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />  
       <div className={styles.column}>
-          <h2 className={styles.titles}><u>MORE METRICS</u></h2>
+          <h2 className={styles.titles}><u>ALL TEAMS</u></h2>
           <p>This is the first column.</p>
           <div className={styles.metricContainer}>
           {role == "editor" &&
-            <motion.div className={styles.addMetric} animate={{scale: 1}} transition={{ delay: 0.01 }}
-            initial={{scale:0.5}} onClick={() => {setMetricStats(metricStats => ([...metricStats,metricStats.length+1]))}}>+</motion.div>
+            <motion.div className={styles.addTeam} animate={{scale: 1}} transition={{ delay: 0.01 }}
+            initial={{scale:0.5}} onClick={openModal}>+</motion.div>
         }
-          {metricStats.map((item, idx) => {
+        <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <h2>Enter Team Number</h2>
+        <input onChange={(e) => {setTeamNumber(e.target.value); console.log(e.target.value)}} placeholder='TEAM NUMBER'/>
+        <button onClick={() => {addTeam(teamNumber); closeModal()}}>Submit</button>
+      </Modal>
+          {teamNumberList.map((item, idx) => {
+            console.log(item)
             return(
               <motion.div className={styles.gridStat} key={idx} animate={{scale: 1}}
               initial={{scale:0.75}} whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}>
+              whileTap={{ scale: 0.9 }} onClick={() => getTeamData(item)}>
                 <Metrics metric={item}/>
               </motion.div>
             )
@@ -61,32 +152,32 @@ export default function Home() {
             }
               <h2 className={styles.titles}><u>ANALYTICS</u></h2>
               <p>This is the first sub-column of the second column.</p>
-              {(metricStats.length == 0) &&
+              {(teamNumberList.length == 0) &&
                 <div className={styles.analyticsContainer}>
                 <Metrics metric={"--"} />
                 <Metrics metric={"--"} />
                 <Metrics metric={"--"} />
                 </div>
               }
-              {(metricStats.length == 1) &&
+              {(teamNumberList.length == 1) &&
                 <div className={styles.analyticsContainer}>
-                <Metrics metric={metricStats[metricStats.length - 1]} />
+                <Metrics metric={teamNumberList[0]} />
                 <Metrics metric={"--"} />
                 <Metrics metric={"--"} />
                 </div>
               }
-              {(metricStats.length == 2) &&
+              {(teamNumberList.length == 2) &&
                 <div className={styles.analyticsContainer}>
-                <Metrics metric={metricStats[metricStats.length - 1]} />
-              <Metrics metric={metricStats[metricStats.length - 2]}/>
+                <Metrics metric={teamNumberList[0]} />
+              <Metrics metric={teamNumberList[1]}/>
               <Metrics metric={"--"} />
                 </div>
               }
-              {(metricStats.length > 2) &&
+              {(teamNumberList.length > 2) &&
                 <div className={styles.analyticsContainer}>
-                <Metrics metric={metricStats[metricStats.length - 1]} />
-              <Metrics metric={metricStats[metricStats.length - 2]}/>
-              <Metrics metric={metricStats[metricStats.length - 3]}/>
+                <Metrics metric={teamNumberList[0]} />
+              <Metrics metric={teamNumberList[1]}/>
+              <Metrics metric={teamNumberList[2]}/>
                 </div>
               }
               
@@ -117,22 +208,36 @@ export default function Home() {
                     <h2 className={styles.titles}><u>EDIT ANALYTICS</u></h2>
                       <p>This is the third column.</p>
                       <ul className={styles.table}>
-                      {metricStats.map((item, idx) => {
-                        return(
+                      {teamData &&
+                        Object.keys(teamData).map((item, idx) => {
+                          if (item != "test") {
+                            return(
                             <motion.li 
                             animate={{scale: 1}}
                             initial={{scale:0.95}}
                             className={styles.indieStat} key={idx}>
                               <div className={styles.tableElement}>
-                                {item}
+                                {item}: {teamData[item]}
                               </div>
                             </motion.li>
                         )
+                          }
+                        
                       })}
                       </ul>
+                      <button className={styles.addMetric} onClick={() => {setAddMetricModal(true)}}>+</button>
                   </Fragment>
                     
-                    
+                  <Modal
+                  isOpen={addMetricModal}
+                  onRequestClose={() => {setAddMetricModal(false)}}
+                  style={customStyles}
+                  contentLabel="Example Modal"
+                  >
+                      <input onChange={(e) => {setMetricLabel(e.target.value)}} placeholder='METRIC Label'/>
+                      <input onChange={(e) => {setMetricValue(e.target.value)}} placeholder='METRIC Value'/>
+                      <button onClick={()=>{addMetricToTeam(teamData.teamNumber, metricLabel, metricValue); setAddMetricModal(false)}}>Submit</button>
+                  </Modal>
                   
             </motion.div>}
           </Fragment>

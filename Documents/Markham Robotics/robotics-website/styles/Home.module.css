@@ -87,7 +87,7 @@
   justify-content: center;
 }
 
-.addMetric {
+.addTeam {
   border: solid 1px rgb(0, 0, 0);
   background-color: #000;
   color: #21C531;
@@ -171,3 +171,22 @@
   cursor: pointer;
 }
 
+
+.addMetric {
+  background-color: black;
+  color: #21C531;
+  border: none;
+  border-radius: 50%; /* Makes the button circular */
+  padding: 15px 20px; /* Adjust as needed to change button size */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 4px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+.addMetric:hover {
+  box-shadow: 0 0 20px #21C531; /* Green shadow on hover */
+}
