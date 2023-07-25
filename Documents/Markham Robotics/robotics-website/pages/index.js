@@ -248,15 +248,19 @@ export default function Home() {
                                     <div>
                                       <b>{item}:</b> {teamData[item]}
                                     </div>
-                                    <div className={styles.AnalyticEditContainer}>
-                                      <div className={styles.editMetric} onClick={() => {setMetricLabel(item); setMetricValue(teamData[item]); setAddMetricModal(true);}}>
-                                        <div class='fa fa-edit'></div>
-                                      </div>
-                                      
-                                      <div className={styles.removeMetric}>
-                                        <div class="fa fa-trash-o" onClick={()=>{removeMetricFromTeam(teamData.teamNumber, item)}}></div>   
-                                      </div>
-                                    </div>
+                                    {
+                                      role == "editor" &&
+                                        <div className={styles.AnalyticEditContainer}>
+                                          <div className={styles.editMetric} onClick={() => {setMetricLabel(item); setMetricValue(teamData[item]); setAddMetricModal(true);}}>
+                                            <div class='fa fa-edit'></div>
+                                          </div>
+                                          
+                                          <div className={styles.removeMetric}>
+                                            <div class="fa fa-trash-o" onClick={()=>{removeMetricFromTeam(teamData.teamNumber, item)}}></div>   
+                                          </div>
+                                        </div>
+                                    }
+                                    
                                     
                                   </div>
                                   
