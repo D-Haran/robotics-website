@@ -4,7 +4,7 @@ import Metrics from '../components/metrics'
 import { Fragment, useEffect, useState } from 'react'
 import { motion } from "framer-motion"
 import Modal from 'react-modal';
-import { collection, getDocs, doc, setDoc, addDoc, getDoc, getCountFromServer, updateDoc, deleteDoc } from "firebase/firestore";
+import { collection, getDocs, doc, setDoc, addDoc, getDoc, deleteField, updateDoc, deleteDoc } from "firebase/firestore";
 import {auth, db} from '../firebase'
 
 
@@ -23,6 +23,7 @@ export default function Home() {
   const [metricValue, setMetricValue] = useState("")
   const [customMetricLabel, setCustomMetricPassLabel] = useState("")
   const [customMetricValue, setCustomMetricPassValue] = useState("")
+  const metrics = ["Autonomous", "Balancing Autonomous", "Placing Items", "Drivebase", "Years Of Experience", "Notes"]
 
   const customStyles = {
     content: {
@@ -87,6 +88,14 @@ export default function Home() {
     const docRef = doc(db, 'teams', '6866', 'other_teams', teamNumber);
     await updateDoc(docRef, {
       [label]: value
+    });
+    getTeamData(teamNumber)
+  }
+
+  const removeMetricFromTeam = async(teamNumber, label) => {
+    const docRef = doc(db, 'teams', '6866', 'other_teams', teamNumber);
+    await updateDoc(docRef, {
+      [label]: deleteField()
     });
     getTeamData(teamNumber)
   }
@@ -236,8 +245,21 @@ export default function Home() {
                                 initial={{scale:0.95}}
                                 className={styles.indieStat} key={idx}>
                                   <div className={styles.tableElement}>
-                                    <b>{item}:</b> {teamData[item]}
+                                    <div>
+                                      <b>{item}:</b> {teamData[item]}
+                                    </div>
+                                    <div className={styles.AnalyticEditContainer}>
+                                      <div className={styles.editMetric} onClick={() => {setMetricLabel(item); setMetricValue(teamData[item]); setAddMetricModal(true);}}>
+                                        <div class='fa fa-edit'></div>
+                                      </div>
+                                      
+                                      <div className={styles.removeMetric}>
+                                        <div class="fa fa-trash-o" onClick={()=>{removeMetricFromTeam(teamData.teamNumber, item)}}></div>   
+                                      </div>
+                                    </div>
+                                    
                                   </div>
+                                  
                                 </motion.li>
                             )
                               }
@@ -261,11 +283,11 @@ export default function Home() {
                         
                       <Modal
                       isOpen={addMetricModal}
-                      onRequestClose={() => {setAddMetricModal(false); setMetricLabel(""); setMetricValue(null)}}
+                      onRequestClose={() => {setAddMetricModal(false); setMetricLabel(""); setMetricValue(null); setCustomMetricPassLabel("")}}
                       style={customStyles}
                       contentLabel="Create Metric"
                       >
-                          <select className={styles.metricDropdown} onChange={(e) => {setMetricLabel(e.target.value); console.log(e.target.value); setMetricValue("")}}>
+                          <select className={styles.metricDropdown} value={metricLabel.length > 0 ? metrics.includes(metricLabel) ? metricLabel : "Custom-DevControl" : ""} onChange={(e) => {setMetricLabel(e.target.value); console.log(e.target.value); setMetricValue("")}}>
                             <option value="" disabled selected>Choose a Metric Label...</option>
                             <option value="Autonomous">Autonomous</option>
                             <option value="Balancing Autonomous">Balancing Autonomous</option>
@@ -279,10 +301,10 @@ export default function Home() {
                             metricLabel == "Custom-DevControl" &&
                             <Fragment>
                               <div>
-                                <input className={styles.metricInput} onChange={(e) => {setCustomMetricPassLabel(e.target.value)}} placeholder='Metric Label'/>
+                                <input className={styles.metricInput} defaultValue={customMetricLabel} onChange={(e) => {setCustomMetricPassLabel(e.target.value)}} placeholder='Metric Label'/>
                               </div>
                               <div>
-                                <input className={styles.metricInput} onChange={(e) => {setMetricValue(e.target.value)}} placeholder='Metric Value'/>
+                                <input className={styles.metricInput} defaultValue={metricValue} onChange={(e) => {setMetricValue(e.target.value)}} placeholder='Metric Value'/>
                               </div>
                             </Fragment>
                           }
