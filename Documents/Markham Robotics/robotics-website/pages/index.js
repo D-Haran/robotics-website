@@ -160,9 +160,9 @@ export default function Home() {
               <p>This is the first sub-column of the second column.</p>
               {(teamNumberList.length == 0) &&
                 <div className={styles.analyticsContainer}>
-                <Metrics metric={"--"} />
-                <Metrics metric={"--"} />
-                <Metrics metric={"--"} />
+                <div><Metrics metric={"--"} /></div>
+                <div><Metrics metric={"--"} /></div>
+                <div><Metrics metric={"--"} /></div>
                 </div>
               }
               {(teamNumberList.length == 1) &&
@@ -170,8 +170,8 @@ export default function Home() {
                 <div onClick={() => {getTeamData(teamNumberList[0])}}>
                   <Metrics metric={teamNumberList[0]} />
                 </div>
-                <Metrics metric={"--"} />
-                <Metrics metric={"--"} />
+                <div><Metrics metric={"--"} /></div>
+                <div><Metrics metric={"--"} /></div>
                 </div>
               }
               {(teamNumberList.length == 2) &&
