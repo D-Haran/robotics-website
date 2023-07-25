@@ -21,6 +21,8 @@ export default function Home() {
   const [addMetricModal, setAddMetricModal] = useState(false)
   const [metricLabel, setMetricLabel] = useState("")
   const [metricValue, setMetricValue] = useState("")
+  const [customMetricLabel, setCustomMetricPassLabel] = useState("")
+  const [customMetricValue, setCustomMetricPassValue] = useState("")
 
   const customStyles = {
     content: {
@@ -60,7 +62,6 @@ export default function Home() {
     const docSnap = await getDocs(collectionRef);
     
     docSnap.forEach(doc => {
-      console.log(doc.id);
       teams[doc.id] = doc.data()
       setTeamNumberList(Object.keys(teams))
     })
@@ -94,6 +95,7 @@ export default function Home() {
     getTeams('6866')
   }, [renew])
 
+
   return (
     <div className={styles.container}>
       <Head>
@@ -103,6 +105,7 @@ export default function Home() {
       <main className={styles.main}>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />  
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
       <div className={styles.column}>
           <h2 className={styles.titles}><u>ALL TEAMS</u></h2>
           <p>This is the first column.</p>
@@ -122,7 +125,6 @@ export default function Home() {
         <button onClick={() => {addTeam(teamNumber); closeModal()}}>Submit</button>
       </Modal>
           {teamNumberList.map((item, idx) => {
-            console.log(item)
             return(
               <motion.div className={styles.gridStat} key={idx} animate={{scale: 1}}
               initial={{scale:0.75}} whileHover={{ scale: 1.1 }}
@@ -165,23 +167,35 @@ export default function Home() {
               }
               {(teamNumberList.length == 1) &&
                 <div className={styles.analyticsContainer}>
-                <Metrics metric={teamNumberList[0]} />
+                <div onClick={() => {getTeamData(teamNumberList[0])}}>
+                  <Metrics metric={teamNumberList[0]} />
+                </div>
                 <Metrics metric={"--"} />
                 <Metrics metric={"--"} />
                 </div>
               }
               {(teamNumberList.length == 2) &&
                 <div className={styles.analyticsContainer}>
-                <Metrics metric={teamNumberList[0]} />
-              <Metrics metric={teamNumberList[1]}/>
-              <Metrics metric={"--"} />
+                <div className={styles.analyticContainer} onClick={() => {getTeamData(teamNumberList[0])}}>
+                  <Metrics metric={teamNumberList[0]} />
+                </div>
+                <div className={styles.analyticContainer} onClick={() => {getTeamData(teamNumberList[1])}}>
+                  <Metrics metric={teamNumberList[1]}/>
+                </div>
+                <div><Metrics metric={"--"} /></div>
                 </div>
               }
               {(teamNumberList.length > 2) &&
                 <div className={styles.analyticsContainer}>
-                <Metrics metric={teamNumberList[0]} />
-              <Metrics metric={teamNumberList[1]}/>
-              <Metrics metric={teamNumberList[2]}/>
+                <div onClick={() => {getTeamData(teamNumberList[0])}}>
+                  <Metrics metric={teamNumberList[0]} />
+                </div>
+                <div onClick={() => {getTeamData(teamNumberList[1])}}>
+                  <Metrics metric={teamNumberList[1]} />
+                </div>
+                <div onClick={() => {getTeamData(teamNumberList[2])}}>
+                  <Metrics metric={teamNumberList[2]} />
+                </div>
                 </div>
               }
               
@@ -195,8 +209,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-        {
-          role == "editor" &&
           <Fragment>
           {
             teamData != null &&
@@ -212,19 +224,19 @@ export default function Home() {
                     </motion.button>
 
                       <Fragment>
-                        <h2 className={styles.titles}><u>EDIT ANALYTICS</u></h2>
+                        <h2 className={styles.titles}><u>EDIT ANALYTICS:</u> {teamData.teamNumber}</h2>
                           <p>This is the third column.</p>
                           <ul className={styles.table}>
                           {teamData &&
                             Object.keys(teamData).map((item, idx) => {
-                              if (item != "test") {
+                              if (item != "test" && item != "teamNumber") {
                                 return(
                                 <motion.li 
                                 animate={{scale: 1}}
                                 initial={{scale:0.95}}
                                 className={styles.indieStat} key={idx}>
                                   <div className={styles.tableElement}>
-                                    {item}: {teamData[item]}
+                                    <b>{item}:</b> {teamData[item]}
                                   </div>
                                 </motion.li>
                             )
@@ -232,25 +244,131 @@ export default function Home() {
                             
                           })}
                           </ul>
-                          {teamData.teamNumber &&
-                            <Fragment>
-                              <button className={styles.addMetric} onClick={() => {setAddMetricModal(true)}}>+</button>
-                              <button onClick={()=>{removeTeam(teamData.teamNumber)}}>Remove Team</button>                            
-                            </Fragment>
-
-                          }
-                          
+                          {role == "editor" &&
+                          <Fragment>
+                            {teamData.teamNumber &&
+                              <Fragment>
+                                <button className={styles.addMetric} onClick={() => {setAddMetricModal(true)}}>+</button>
+                                <div className={styles.removeTeam}>
+                                  <div class="fa fa-trash-o" onClick={()=>{removeTeam(teamData.teamNumber)}}></div>   
+                                </div>
+                                                         
+                              </Fragment>
+                            }
+                          </Fragment>
+                          }                          
                       </Fragment>
                         
                       <Modal
                       isOpen={addMetricModal}
-                      onRequestClose={() => {setAddMetricModal(false)}}
+                      onRequestClose={() => {setAddMetricModal(false); setMetricLabel(""); setMetricValue(null)}}
                       style={customStyles}
-                      contentLabel="Example Modal"
+                      contentLabel="Create Metric"
                       >
-                          <input onChange={(e) => {setMetricLabel(e.target.value)}} placeholder='METRIC Label'/>
-                          <input onChange={(e) => {setMetricValue(e.target.value)}} placeholder='METRIC Value'/>
-                          <button onClick={()=>{addMetricToTeam(teamData.teamNumber, metricLabel, metricValue); setAddMetricModal(false)}}>Submit</button>
+                          <select className={styles.metricDropdown} onChange={(e) => {setMetricLabel(e.target.value); console.log(e.target.value); setMetricValue("")}}>
+                            <option value="" disabled selected>Choose a Metric Label...</option>
+                            <option value="Autonomous">Autonomous</option>
+                            <option value="Balancing Autonomous">Balancing Autonomous</option>
+                            <option value="Placing Items">Placing Items</option>
+                            <option value="Drivebase">Drivebase</option>
+                            <option value="Years Of Experience">Years of Experience</option>
+                            <option value="Notes">Notes</option>
+                            <option value="Custom-DevControl">Custom...</option>
+                          </select>
+                          {
+                            metricLabel == "Custom-DevControl" &&
+                            <Fragment>
+                              <div>
+                                <input className={styles.metricInput} onChange={(e) => {setCustomMetricPassLabel(e.target.value)}} placeholder='Metric Label'/>
+                              </div>
+                              <div>
+                                <input className={styles.metricInput} onChange={(e) => {setMetricValue(e.target.value)}} placeholder='Metric Value'/>
+                              </div>
+                            </Fragment>
+                          }
+                          {
+                            metricLabel == "Autonomous" &&
+                              <select className={styles.metricDropdown} onChange={(e) => {setMetricValue(e.target.value)}}>
+                                <option value="" disabled selected>Choose a Metric Value...</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                                <option value="Custom-DevControl">Custom Value...</option>
+                              </select>
+                          }
+                          {
+                            metricLabel == "Balancing Autonomous" &&
+                              <select className={styles.metricDropdown} onChange={(e) => {setMetricValue(e.target.value)}}>
+                                <option value="" disabled selected>Choose a Metric Value...</option>
+                                <option value="TeleOp">TeleOp</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                                <option value="God">God</option>
+                                <option value="Custom-DevControl">Custom Value...</option>
+                              </select>
+                          }
+                          {
+                            metricLabel == "Drivebase" &&
+                              <select className={styles.metricDropdown} onChange={(e) => {setMetricValue(e.target.value)}}>
+                                <option value="" disabled selected>Choose a Metric Value...</option>
+                                <option value="Tank">Tank</option>
+                                <option value="Swerve Drive">Swerve Drive</option>
+                                <option value="Custom-DevControl">Custom Value...</option>
+                              </select>
+                          }
+                          {
+                            metricLabel == "Placing Items" &&
+                            <Fragment>
+                              <div>
+                                <input className={styles.metricInput} onChange={(e) => {
+                                    if (e.target.value.includes("/")){
+                                      e.target.value.split("/")
+                                      setMetricValue(Math.round((parseInt(e.target.value.split("/")[0]) / parseInt(e.target.value.split("/")[1])) * 100) + `% (${e.target.value})`)
+                                      console.log(metricValue)                                  
+                                    } else if (parseInt(e.target.value) < 1) {
+                                      setMetricValue(parseFloat(e.target.value) * 100)
+                                    } else {
+                                      setMetricValue(e.target.value)
+                                    }
+                                  }} placeholder='Enter a Fraction, Decimal, or Whole Number Percent'/>
+                              </div>
+                              <div>
+                                  <p className={styles.metricInput}>{metricValue}</p>
+                              </div>
+                            </Fragment>
+                          }
+                          {
+                            metricLabel == "Years Of Experience" &&
+                            <div>
+                              <input className={styles.metricInput} onChange={(e) => {setMetricValue(e.target.value)}} placeholder='Years of Experience'/>
+                            </div>
+                              
+                          }
+                          {
+                            metricLabel == "Notes" &&
+                            <div>
+                              <textarea className={styles.metricTextArea} onChange={(e) => {setMetricValue(e.target.value)}} placeholder='Notes...'/>
+                            </div>
+                          }
+                          {
+                            metricValue == "Custom-DevControl" &&
+                            <div>
+                              <input className={styles.metricInput} onChange={(e) => {setCustomMetricPassValue(e.target.value); console.log(customMetricValue)}} placeholder='Custom Value...'/>
+                            </div>
+                          }
+                          {
+                            metricLabel != "" &&
+                            <Fragment>
+                              {metricLabel != "Custom-DevControl" && metricValue != "Custom-DevControl" &&
+                                <button onClick={()=>{addMetricToTeam(teamData.teamNumber, metricLabel, metricValue); setAddMetricModal(false); setMetricLabel(""); setMetricValue(null)}}>Submit</button>
+                              }
+                              {metricLabel == "Custom-DevControl" &&
+                                <button onClick={()=>{addMetricToTeam(teamData.teamNumber, customMetricLabel, metricValue); setAddMetricModal(false); setMetricLabel(""); setMetricValue(null);}}>Submit Label</button>
+                              }
+                              {metricValue == "Custom-DevControl" &&
+                                <button onClick={()=>{addMetricToTeam(teamData.teamNumber, metricLabel, customMetricValue); console.log(customMetricValue); setAddMetricModal(false); setMetricLabel(""); setMetricValue(null);}}>Submit Value</button>
+                              }
+                            </Fragment>
+                          }
                       </Modal>
                       
                 </motion.div>}
@@ -259,8 +377,8 @@ export default function Home() {
             
           </Fragment>
           
-          
-        }
+        
+        
         
       </main>
     </div>

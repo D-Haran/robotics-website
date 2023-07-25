@@ -118,11 +118,7 @@
 }
 
 .analyticsContainer {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-.analyticContainer {
-  
+  display: flex;
 }
 
 .map {
@@ -157,10 +153,6 @@
   width: 90%;
   cursor: pointer;
 }
-
-/* .removeTeam {
-  cursor: pointer;
-} */
 
 .tableElement {
   color: #000;
@@ -197,8 +189,6 @@
   margin: 4px 4px;
   cursor: pointer;
   transition: all 0.3s ease; /* Smooth transition */
-  position: absolute;
-  right: 50%;
 }
 
 .addMetric:hover {
@@ -206,29 +196,8 @@
 }
 
 .removeTeam {
-  cursor: pointer; 
-  color: red;
-  position: absolute; 
-  right: 30px;
-  bottom: 30px;
-}
-.removeTeam:hover {
-  box-shadow: 0 0 30px red;
-}
-
-.metricInput {
-  width: 100%;
-}
-
-.metricDropdown {
-  text-align: center;
-  min-width: 50%;
-  max-width: max-content;
-  margin: 20px 0;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
-  outline: none;
-  border-radius: 10px;
+  position: relative;
+  top: 0;
+  right: 0;
+  display: none;
 }
