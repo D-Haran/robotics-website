@@ -222,12 +222,13 @@
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 20px;
   margin: 4px 4px;
   cursor: pointer;
   transition: all 0.3s ease; /* Smooth transition */
   position: absolute;
-  right: 50%;
+  left: 10px;
+  bottom: 10px;
 }
 
 .addMetric:hover {
