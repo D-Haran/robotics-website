@@ -242,7 +242,19 @@ export default function Home() {
                                 className={styles.indieStat} key={idx}>
                                   <div className={styles.tableElement}>
                                     <div>
-                                      <b>{item}:</b> {teamData[item]}
+                                      {
+                                        item == "Notes" &&
+                                        <div>
+                                          <b>{item}:</b> <br/> {teamData[item]}
+                                        </div>
+                                      }
+                                      {
+                                        item != "Notes" &&
+                                        <div>
+                                          <b>{item}:</b>{teamData[item]}
+                                        </div>
+                                      }
+                                      
                                     </div>
                                     {
                                       role == "editor" &&

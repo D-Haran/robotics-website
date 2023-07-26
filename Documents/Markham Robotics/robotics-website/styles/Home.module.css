@@ -158,6 +158,7 @@
   cursor: pointer;
   inline-size: 95%;
   overflow-wrap: break-word;
+  white-space: pre-line;
   /* display: block; */
 }
 
