@@ -116,7 +116,7 @@ export default function Home() {
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />  
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
       <div className={styles.column}>
-          <h2 className={styles.titles}><u>ALL TEAMS</u></h2>
+          <h2 className={styles.titles}><u>TEAMS</u></h2>
           <div className={styles.metricContainer}>
           {role == "editor" &&
             <motion.div className={styles.addTeam} animate={{scale: 1}} transition={{ delay: 0.01 }}
