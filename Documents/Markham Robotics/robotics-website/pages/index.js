@@ -117,7 +117,6 @@ export default function Home() {
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
       <div className={styles.column}>
           <h2 className={styles.titles}><u>ALL TEAMS</u></h2>
-          <p>This is the first column.</p>
           <div className={styles.metricContainer}>
           {role == "editor" &&
             <motion.div className={styles.addTeam} animate={{scale: 1}} transition={{ delay: 0.01 }}
@@ -166,7 +165,6 @@ export default function Home() {
               </Fragment>
             }
               <h2 className={styles.titles}><u>ANALYTICS</u></h2>
-              <p>This is the first sub-column of the second column.</p>
               {(teamNumberList.length == 0) &&
                 <div className={styles.analyticsContainer}>
                 <div><Metrics metric={"--"} /></div>
@@ -211,7 +209,6 @@ export default function Home() {
             </div>
             <div className={styles.subColumn}>
               <h2 className={styles.titles}><u>MAP</u></h2>
-              <p>This is the second sub-column of the second column.</p>
               <div className={styles.map}>
           
           </div>
@@ -234,7 +231,6 @@ export default function Home() {
 
                       <Fragment>
                         <h2 className={styles.titles}><u>EDIT ANALYTICS:</u> {teamData.teamNumber}</h2>
-                          <p>This is the third column.</p>
                           <ul className={styles.table}>
                           {teamData &&
                             Object.keys(teamData).map((item, idx) => {
