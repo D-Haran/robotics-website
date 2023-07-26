@@ -156,6 +156,8 @@
   margin: 2%;
   width: 90%;
   cursor: pointer;
+  inline-size: 95%;
+  overflow-wrap: break-word;
   /* display: block; */
 }
 
