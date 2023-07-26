@@ -368,7 +368,7 @@ export default function Home() {
                           {
                             metricLabel == "Notes" &&
                             <div>
-                              <textarea className={styles.metricTextArea} onChange={(e) => {setMetricValue(e.target.value)}} placeholder='Notes...'/>
+                              <textarea className={styles.metricTextArea} defaultValue={metricValue} onChange={(e) => {setMetricValue(e.target.value)}} placeholder='Notes...'/>
                             </div>
                           }
                           {
