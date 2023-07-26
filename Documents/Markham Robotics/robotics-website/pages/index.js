@@ -251,7 +251,7 @@ export default function Home() {
                                       {
                                         item != "Notes" &&
                                         <div>
-                                          <b>{item}:</b>{teamData[item]}
+                                          <b>{item}:</b> {teamData[item]}
                                         </div>
                                       }
                                       
