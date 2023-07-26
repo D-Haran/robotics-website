@@ -316,8 +316,10 @@ export default function Home() {
                                 <input className={styles.metricInput} defaultValue={customMetricLabel} onChange={(e) => {setCustomMetricPassLabel(e.target.value)}} placeholder='Metric Label'/>
                               </div>
                               <div>
-                                <input className={styles.metricInput} defaultValue={metricValue} onChange={(e) => {setMetricValue(e.target.value)}} placeholder='Metric Value'/>
+                              <br />
+                                <textarea rows="4" cols="50" className={styles.metricInput} defaultValue={metricValue} onChange={(e) => {setMetricValue(e.target.value)}} placeholder='Metric Value'/>
                               </div>
+                              <br />
                             </Fragment>
                           }
                           {
@@ -380,7 +382,7 @@ export default function Home() {
                           {
                             metricLabel == "Notes" &&
                             <div>
-                              <textarea className={styles.metricTextArea} defaultValue={metricValue} onChange={(e) => {setMetricValue(e.target.value)}} placeholder='Notes...'/>
+                              <textarea className={styles.metricTextArea} rows="4" cols="50" defaultValue={metricValue} onChange={(e) => {setMetricValue(e.target.value)}} placeholder='Notes...'/>
                             </div>
                           }
                           {
@@ -396,10 +398,10 @@ export default function Home() {
                                 <button onClick={()=>{addMetricToTeam(teamData.teamNumber, metricLabel, metricValue); setAddMetricModal(false); setMetricLabel(""); setMetricValue(null)}}>Submit</button>
                               }
                               {metricLabel == "Custom-DevControl" &&
-                                <button onClick={()=>{addMetricToTeam(teamData.teamNumber, customMetricLabel, metricValue); setAddMetricModal(false); setMetricLabel(""); setMetricValue(null);}}>Submit Label</button>
+                                <button onClick={()=>{addMetricToTeam(teamData.teamNumber, customMetricLabel, metricValue); setAddMetricModal(false); setMetricLabel(""); setMetricValue(null);}}>Submit</button>
                               }
                               {metricValue == "Custom-DevControl" &&
-                                <button onClick={()=>{addMetricToTeam(teamData.teamNumber, metricLabel, customMetricValue); console.log(customMetricValue); setAddMetricModal(false); setMetricLabel(""); setMetricValue(null);}}>Submit Value</button>
+                                <button onClick={()=>{addMetricToTeam(teamData.teamNumber, metricLabel, customMetricValue); console.log(customMetricValue); setAddMetricModal(false); setMetricLabel(""); setMetricValue(null);}}>Submit</button>
                               }
                             </Fragment>
                           }
