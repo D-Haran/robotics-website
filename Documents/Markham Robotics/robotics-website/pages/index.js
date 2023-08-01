@@ -164,48 +164,7 @@ export default function Home() {
           }
               </Fragment>
             }
-              <h2 className={styles.titles}><u>ANALYTICS</u></h2>
-              {(teamNumberList.length == 0) &&
-                <div className={styles.analyticsContainer}>
-                <div><Metrics metric={"--"} /></div>
-                <div><Metrics metric={"--"} /></div>
-                <div><Metrics metric={"--"} /></div>
-                </div>
-              }
-              {(teamNumberList.length == 1) &&
-                <div className={styles.analyticsContainer}>
-                <div onClick={() => {getTeamData(teamNumberList[0])}}>
-                  <Metrics metric={teamNumberList[0]} />
-                </div>
-                <div><Metrics metric={"--"} /></div>
-                <div><Metrics metric={"--"} /></div>
-                </div>
-              }
-              {(teamNumberList.length == 2) &&
-                <div className={styles.analyticsContainer}>
-                <div className={styles.analyticContainer} onClick={() => {getTeamData(teamNumberList[0])}}>
-                  <Metrics metric={teamNumberList[0]} />
-                </div>
-                <div className={styles.analyticContainer} onClick={() => {getTeamData(teamNumberList[1])}}>
-                  <Metrics metric={teamNumberList[1]}/>
-                </div>
-                <div><Metrics metric={"--"} /></div>
-                </div>
-              }
-              {(teamNumberList.length > 2) &&
-                <div className={styles.analyticsContainer}>
-                <div onClick={() => {getTeamData(teamNumberList[0])}}>
-                  <Metrics metric={teamNumberList[0]} />
-                </div>
-                <div onClick={() => {getTeamData(teamNumberList[1])}}>
-                  <Metrics metric={teamNumberList[1]} />
-                </div>
-                <div onClick={() => {getTeamData(teamNumberList[2])}}>
-                  <Metrics metric={teamNumberList[2]} />
-                </div>
-                </div>
-              }
-              
+             
             </div>
             <div className={styles.subColumn}>
               <h2 className={styles.titles}><u>MAP</u></h2>
