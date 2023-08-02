@@ -184,7 +184,7 @@ export default function Home() {
                           <Fragment>
                             {teamData.teamNumber &&
                               <Fragment>
-                                <button className={styles.addMetric} onClick={() => {setAddMetricModal(true)}}>+</button>
+                                <button className={styles.addMetric} onClick={() => {setAddMetricModal(true)}}>&#x2B;</button>
                                 <div className={styles.removeTeam}>
                                   <div class="fa fa-trash-o" onClick={()=>{removeTeam(teamData.teamNumber)}}></div>   
                                 </div>

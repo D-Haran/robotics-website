@@ -26,7 +26,7 @@
 }
 .column3 {
   flex: 1;
-  position: absolute;
+  position: fixed;
   right: 0;
   height: 100%;
   width: 50%;
@@ -47,18 +47,12 @@
 
 
 .dropdown {
-  text-align: center;
-  width: 60px;
-  height: 60px;
+  width: 2vw;
+  height: 2vw;
   cursor: pointer;
   position: absolute;
-  left: 20px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
-  outline: none;
-  border-radius: 10px;
+  left: 3vh;
+  top: 4vh;
 }
 
 .titles {
@@ -216,9 +210,9 @@
   margin: 4px 4px;
   cursor: pointer;
   transition: all 0.3s ease; /* Smooth transition */
-  position: absolute;
-  left: 10px;
-  bottom: 10px;
+  position: sticky;
+  left: 5%;
+  top: 95%;
 }
 
 .addMetric:hover {
@@ -226,11 +220,21 @@
 }
 
 .removeTeam {
-  cursor: pointer; 
+  background-color: black;
   color: red;
-  position: absolute; 
-  right: 30px;
-  bottom: 30px;
+  border: none;
+  border-radius: 50%; /* Makes the button circular */
+  padding: 15px 20px; /* Adjust as needed to change button size */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 4px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Smooth transition */
+  position: sticky;
+  left: 90%;
+  top: 95%; 
 }
 .removeTeam:hover {
   box-shadow: 0 0 30px red;
