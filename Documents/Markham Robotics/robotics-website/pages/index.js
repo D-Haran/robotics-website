@@ -132,7 +132,7 @@ export default function Home() {
                     </motion.button>
 
                       <Fragment>
-                        <h2 className={styles.titles}><u>EDIT ANALYTICS:</u> {teamData.teamNumber}</h2>
+                        <h2 className={styles.titles}><u>{role == "editor" && 'EDIT ' }ANALYTICS:</u> {teamData.teamNumber}</h2>
                           <ul className={styles.table}>
                           {teamData &&
                             Object.keys(teamData).map((item, idx) => {
