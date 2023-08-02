@@ -10,7 +10,8 @@
 }
 
 .main {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -25,6 +26,10 @@
 }
 .column3 {
   flex: 1;
+  position: absolute;
+  right: 0;
+  height: 100%;
+  width: 50%;
   background-color: #000;
   color: #fff;
   padding: 20px;
@@ -40,26 +45,14 @@
   height: 100%;
 }
 
-.subColumn {
-  flex: 1;
-  border: 1px solid #ddd;
-  padding: 20px;
-  height: max-content;
-  box-sizing: border-box;
-  margin-bottom: 10vh;
-  /* overflow: auto; */
-}
-.subColumn1 {
-  padding: 20px;
-  height: max-content;
-  box-sizing: border-box;
-  
-}
 
 .dropdown {
   text-align: center;
-  width: 50%;
-  margin: 20px 25%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  position: absolute;
+  left: 20px;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -121,15 +114,11 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
-.analyticContainer {
-  
-}
 
 .map {
   background-color: #21C531;
-  height: 100%;
+  height: 85vh;
   width: 100%;
-  overflow: auto;
 }
 
 .column::-webkit-scrollbar {
@@ -263,3 +252,4 @@
   outline: none;
   border-radius: 10px;
 }
+

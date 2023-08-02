@@ -6,6 +6,7 @@ import { motion } from "framer-motion"
 import Modal from 'react-modal';
 import { collection, getDocs, doc, setDoc, addDoc, getDoc, deleteField, updateDoc, deleteDoc } from "firebase/firestore";
 import {auth, db} from '../firebase'
+import Image from 'next/image'
 
 
 export default function Home() {
@@ -115,107 +116,8 @@ export default function Home() {
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />  
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
-      <div className={styles.column}>
-          <h2 className={styles.titles}><u>TEAMS</u></h2>
-          <div className={styles.metricContainer}>
-          {role == "editor" &&
-            <motion.div className={styles.addTeam} animate={{scale: 1}} transition={{ delay: 0.01 }}
-            initial={{scale:0.5}} onClick={openModal}>+</motion.div>
-        }
-        <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
-        <h2>Enter Team Number</h2>
-        <input maxLength={5} onChange={(e) => {setTeamNumber(e.target.value); console.log(e.target.value)}} placeholder='TEAM NUMBER'/>
-        <button onClick={() => {addTeam(teamNumber); closeModal()}}>Submit</button>
-      </Modal>
-          {teamNumberList.map((item, idx) => {
-            return(
-              <motion.div className={styles.gridStat} key={idx} animate={{scale: 1}}
-              initial={{scale:0.75}} whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }} onClick={() => {getTeamData(item)}}>
-                <Metrics metric={item} renew={renewTeams}/>
-              </motion.div>
-            )
-          })}
-          </div>
-        </div>
-
-        <div className={styles.column}>
-        <select className={styles.dropdown}onChange={(e) => {setRole(e.target.value)}}>
-            <option value="editor">Editor</option>
-            <option value="viewer">Viewer</option>
-          </select>
-          <div className={styles.split}>
-            <div className={styles.subColumn1}>
-            {
-              role == "editor" &&
-              <Fragment>
-              {
-              collapsible == true &&
-              <motion.button onClick={() => {setCollapsible(!collapsible)}} className={styles.collapseClosed} animate={{x: 0}} initial={{x:100}} transition={{ ease: "easeInOut" }}>
-              <span class="material-symbols-outlined">
-              arrow_back_ios
-              </span>
-              </motion.button>
-          }
-              </Fragment>
-            }
-              <h2 className={styles.titles}><u>ANALYTICS</u></h2>
-              {(teamNumberList.length == 0) &&
-                <div className={styles.analyticsContainer}>
-                <div><Metrics metric={"--"} /></div>
-                <div><Metrics metric={"--"} /></div>
-                <div><Metrics metric={"--"} /></div>
-                </div>
-              }
-              {(teamNumberList.length == 1) &&
-                <div className={styles.analyticsContainer}>
-                <div onClick={() => {getTeamData(teamNumberList[0])}}>
-                  <Metrics metric={teamNumberList[0]} />
-                </div>
-                <div><Metrics metric={"--"} /></div>
-                <div><Metrics metric={"--"} /></div>
-                </div>
-              }
-              {(teamNumberList.length == 2) &&
-                <div className={styles.analyticsContainer}>
-                <div className={styles.analyticContainer} onClick={() => {getTeamData(teamNumberList[0])}}>
-                  <Metrics metric={teamNumberList[0]} />
-                </div>
-                <div className={styles.analyticContainer} onClick={() => {getTeamData(teamNumberList[1])}}>
-                  <Metrics metric={teamNumberList[1]}/>
-                </div>
-                <div><Metrics metric={"--"} /></div>
-                </div>
-              }
-              {(teamNumberList.length > 2) &&
-                <div className={styles.analyticsContainer}>
-                <div onClick={() => {getTeamData(teamNumberList[0])}}>
-                  <Metrics metric={teamNumberList[0]} />
-                </div>
-                <div onClick={() => {getTeamData(teamNumberList[1])}}>
-                  <Metrics metric={teamNumberList[1]} />
-                </div>
-                <div onClick={() => {getTeamData(teamNumberList[2])}}>
-                  <Metrics metric={teamNumberList[2]} />
-                </div>
-                </div>
-              }
-              
-            </div>
-            <div className={styles.subColumn}>
-              <h2 className={styles.titles}><u>MAP</u></h2>
-              <div className={styles.map}>
-          
-          </div>
-            </div>
-          </div>
-        </div>
-          <Fragment>
+      
+      <Fragment>
           {
             teamData != null &&
             <Fragment>
@@ -355,7 +257,7 @@ export default function Home() {
                             metricLabel == "Placing Items" &&
                             <Fragment>
                               <div>
-                                <input className={styles.metricInput} onChange={(e) => {
+                                <input className={styles.metricInput}  defaultValue={metricValue} onChange={(e) => {
                                     if (e.target.value.includes("/")){
                                       e.target.value.split("/")
                                       setMetricValue(Math.round((parseInt(e.target.value.split("/")[0]) / parseInt(e.target.value.split("/")[1])) * 100) + `% (${e.target.value})`)
@@ -375,7 +277,7 @@ export default function Home() {
                           {
                             metricLabel == "Years Of Experience" &&
                             <div>
-                              <input className={styles.metricInput} onChange={(e) => {setMetricValue(e.target.value)}} placeholder='Years of Experience'/>
+                              <input className={styles.metricInput} defaultValue={metricValue} onChange={(e) => {setMetricValue(e.target.value)}} placeholder='Years of Experience'/>
                             </div>
                               
                           }
@@ -388,7 +290,7 @@ export default function Home() {
                           {
                             metricValue == "Custom-DevControl" &&
                             <div>
-                              <input className={styles.metricInput} onChange={(e) => {setCustomMetricPassValue(e.target.value); console.log(customMetricValue)}} placeholder='Custom Value...'/>
+                              <input  className={styles.metricInput} onChange={(e) => {setCustomMetricPassValue(e.target.value); console.log(customMetricValue)}} placeholder='Custom Value...'/>
                             </div>
                           }
                           {
@@ -412,10 +314,72 @@ export default function Home() {
           }
             
           </Fragment>
+      <div className={styles.column}>
+          <h2 className={styles.titles}><u>TEAMS</u></h2>
+          <div className={styles.metricContainer}>
+          {role == "editor" &&
+            <motion.div className={styles.addTeam} animate={{scale: 1}} transition={{ delay: 0.01 }}
+            initial={{scale:0.5}} onClick={openModal}>+</motion.div>
+        }
+        <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <h2>Enter Team Number</h2>
+        <input maxLength={5} onChange={(e) => {setTeamNumber(e.target.value); console.log(e.target.value)}} placeholder='TEAM NUMBER'/>
+        <button onClick={() => {addTeam(teamNumber); closeModal()}}>Submit</button>
+      </Modal>
+          {teamNumberList.map((item, idx) => {
+            return(
+              <motion.div className={styles.gridStat} key={idx} animate={{scale: 1}}
+              initial={{scale:0.75}} whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }} onClick={() => {getTeamData(item)}}>
+                <Metrics metric={item} renew={renewTeams}/>
+              </motion.div>
+            )
+          })}
+          </div>
+        </div>
+
+        <div className={styles.column}>
+        {role == "editor" &&
+          <Image className={styles.dropdown} onClick={() => {
+              setRole("viewer")}} alt="Profile" src="/static/profile-photo-edit.png" width={100} height={100}></Image>
+        }
+        {role == "viewer" &&
+          <Image className={styles.dropdown} onClick={() => {
+              setRole("editor")}} alt="Profile" src="/static/profile-photo.png" width={100} height={100}></Image>
+        }
+        
+        <div className={styles.split}>
+            <div className={styles.subColumn1}>
+            {
+              role == "editor" &&
+              <Fragment>
+              {
+              collapsible == true &&
+              <motion.button onClick={() => {setCollapsible(!collapsible)}} className={styles.collapseClosed} animate={{x: 0}} initial={{x:100}} transition={{ ease: "easeInOut" }}>
+              <span class="material-symbols-outlined">
+              arrow_back_ios
+              </span>
+              </motion.button>
+          }
+              </Fragment>
+            }
+              
+            </div>
+            <div className={styles.subColumn}>
+              <h2 className={styles.titles}><u>MAP</u></h2>
+              <div className={styles.map}>
           
+          </div>
+            </div>
+          </div>
+        </div>
         
-        
-        
+          
       </main>
     </div>
   )
