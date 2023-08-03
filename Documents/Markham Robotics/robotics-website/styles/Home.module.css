@@ -10,7 +10,8 @@
 }
 
 .main {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -25,6 +26,10 @@
 }
 .column3 {
   flex: 1;
+  position: fixed;
+  right: 0;
+  height: 100%;
+  width: 50%;
   background-color: #000;
   color: #fff;
   padding: 20px;
@@ -40,32 +45,14 @@
   height: 100%;
 }
 
-.subColumn {
-  flex: 1;
-  border: 1px solid #ddd;
-  padding: 20px;
-  height: max-content;
-  box-sizing: border-box;
-  margin-bottom: 10vh;
-  /* overflow: auto; */
-}
-.subColumn1 {
-  padding: 20px;
-  height: max-content;
-  box-sizing: border-box;
-  
-}
 
 .dropdown {
-  text-align: center;
-  width: 50%;
-  margin: 20px 25%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
-  outline: none;
-  border-radius: 10px;
+  width: 2vw;
+  height: 2vw;
+  cursor: pointer;
+  position: absolute;
+  left: 3vh;
+  top: 4vh;
 }
 
 .titles {
@@ -121,15 +108,11 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
-.analyticContainer {
-  
-}
 
 .map {
   background-color: #21C531;
-  height: 100%;
+  height: 85vh;
   width: 100%;
-  overflow: auto;
 }
 
 .column::-webkit-scrollbar {
@@ -158,6 +141,7 @@
   cursor: pointer;
   inline-size: 95%;
   overflow-wrap: break-word;
+  white-space: pre-line;
   /* display: block; */
 }
 
@@ -222,12 +206,13 @@
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 20px;
   margin: 4px 4px;
   cursor: pointer;
   transition: all 0.3s ease; /* Smooth transition */
-  position: absolute;
-  right: 50%;
+  position: sticky;
+  left: 5%;
+  top: 95%;
 }
 
 .addMetric:hover {
@@ -235,11 +220,21 @@
 }
 
 .removeTeam {
-  cursor: pointer; 
+  background-color: black;
   color: red;
-  position: absolute; 
-  right: 30px;
-  bottom: 30px;
+  border: none;
+  border-radius: 50%; /* Makes the button circular */
+  padding: 15px 20px; /* Adjust as needed to change button size */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 4px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Smooth transition */
+  position: sticky;
+  left: 90%;
+  top: 95%; 
 }
 .removeTeam:hover {
   box-shadow: 0 0 30px red;
@@ -261,3 +256,4 @@
   outline: none;
   border-radius: 10px;
 }
+
