@@ -215,11 +215,11 @@ export default function Home() {
                             metricLabel == "Custom-DevControl" &&
                             <Fragment>
                               <div>
-                                <input className={styles.metricInput} defaultValue={customMetricLabel} onChange={(e) => {setCustomMetricPassLabel(e.target.value)}} placeholder='Metric Label'/>
+                                <textarea className={styles.metricTextArea} rows="4" cols="50" defaultValue={metricValue} onChange={(e) => {setMetricValue(e.target.value)}} placeholder='Metric Label'/>
                               </div>
                               <div>
                               <br />
-                                <textarea rows="4" cols="50" className={styles.metricInput} defaultValue={metricValue} onChange={(e) => {setMetricValue(e.target.value)}} placeholder='Metric Value'/>
+                                <textarea className={styles.metricTextArea} rows="4" cols="50" defaultValue={metricValue} onChange={(e) => {setMetricValue(e.target.value)}} placeholder='Metric Value'/>
                               </div>
                               <br />
                             </Fragment>
