@@ -333,7 +333,7 @@ export default function Home() {
                           {
                             metricValue == "Custom-DevControl" &&
                             <div>
-                              <input className={styles.metricInput} onChange={(e) => {setCustomMetricPassValue(e.target.value); console.log(customMetricValue)}} placeholder='Custom Value...'/>
+                              <textarea className={styles.metricTextArea} onChange={(e) => {setMetricValue(e.target.value)}} placeholder='Custom Value...'/>
                             </div>
                           }
                           {
