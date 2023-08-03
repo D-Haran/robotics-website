@@ -290,7 +290,7 @@ export default function Home() {
                           {
                             metricValue == "Custom-DevControl" &&
                             <div>
-                              <textarea className={styles.metricTextArea} onChange={(e) => {setMetricValue(e.target.value)}} placeholder='Custom Value...'/>
+                              <textarea className={styles.metricTextArea} rows="4" cols="50" defaultValue={metricValue} onChange={(e) => {setMetricValue(e.target.value)}} placeholder='Custom Value...'/>
                             </div>
                           }
                           {
