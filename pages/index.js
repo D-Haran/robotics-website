@@ -473,7 +473,7 @@ export default function Home() {
               loadTimeOffset={1} 
               imgSrc={'/static/map.png'} 
               brushRadius={brushRadius} 
-              lazyRadius={0}/>
+              lazyRadius={0}/> 
           </div>
           
             </div>
