@@ -1,0 +1,458 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f9f9f9;
+  color: #000000;
+  overflow: hidden;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.column {
+  flex: 1;
+  border: 2px solid #4F2C60;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: auto;
+}
+.column3 {
+  flex: 1;
+  position: fixed;
+  right: 0;
+  height: 100%;
+  width: 50%;
+  background-color: #000;
+  color: #fff;
+  padding: 20px;
+  z-index: 1;
+  box-sizing: border-box;
+  overflow: auto;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.split {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+
+.dropdown {
+  width: 2vw;
+  height: 2vw;
+  cursor: pointer;
+  position: absolute;
+  left: 3vh;
+  top: 4vh;
+}
+
+.titles {
+  text-align: center;
+}
+
+.gridStat {
+    text-align: center;
+    line-height:100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gridStat:hover .removeTeam{
+  display: block;
+}
+
+.metricContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+}
+
+.addTeam {
+  border: solid 1px #000;
+  background-color: #f9f9f9;
+  color: #4F2C60;
+  padding: 1vw;
+  text-align: center;
+  margin: 5vh auto;
+  line-height:100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+  cursor: pointer;
+  border-radius: 8px;
+  user-select: none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -o-user-select: none;
+}
+.addMetric:hover {
+  border: solid 1px #21C531;
+  color: rgb(255, 255, 255);
+}
+
+.analyticsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.map {
+  height: 85vh;
+  width: 100%;
+  border: solid 3px #000;
+  /* border-radius: 10px; */
+
+  justify-content: center;
+  align-items: center;
+}
+
+.column::-webkit-scrollbar {
+  display: none;               /* width of the entire scrollbar */
+}
+.subColumn::-webkit-scrollbar {
+  width: 5px;               /* width of the entire scrollbar */
+}
+
+.subColumn::-webkit-scrollbar-track {
+  background: rgb(0, 0, 0);        /* color of the tracking area */
+}
+
+.subColumn::-webkit-scrollbar-thumb {
+  background-color: #21C531;    /* color of the scroll thumb */
+  border-radius: 2px;       /* roundness of the scroll thumb */
+}
+
+.indieStat {
+  padding: 1%;
+  background-color: #fff;
+  border-radius: 5px;
+  color: #fff;
+  margin: 2%;
+  width: 90%;
+  cursor: pointer;
+  inline-size: 95%;
+  overflow-wrap: break-word;
+  white-space: pre-line;
+  /* display: block; */
+}
+
+.AnalyticEditContainer {
+  display: flex;
+}
+
+.removeMetric {
+  position: relative;
+  display: flex;
+  left: 90%;
+  color: #000;
+  width: min-content;
+}
+.removeMetric:hover {
+  color: red;
+}
+
+.editMetric {
+  position: relative;
+  display: flex;
+  left: 85%;
+  color: #000;
+  width: min-content;
+}
+.editMetric:hover {
+  color: blue;
+}
+
+/* .removeTeam {
+  cursor: pointer;
+} */
+
+.tableElement {
+  color: #000;
+}
+
+.collapse {
+  position: absolute;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.collapseClosed {
+  position: absolute;
+  border: none;
+  right: 0;
+  background: #4f2c60;
+  padding: 1%;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  cursor: pointer;
+}
+
+
+.addMetric {
+  background-color: black;
+  color: #21C531;
+  border: none;
+  border-radius: 50%; /* Makes the button circular */
+  padding: 15px 20px; /* Adjust as needed to change button size */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 4px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Smooth transition */
+  position: sticky;
+  left: 5%;
+  top: 95%;
+}
+
+.addMetric:hover {
+  box-shadow: 0 0 20px #21C531; /* Green shadow on hover */
+}
+
+.removeTeam {
+  background-color: black;
+  color: red;
+  border: none;
+  border-radius: 50%; /* Makes the button circular */
+  padding: 15px 20px; /* Adjust as needed to change button size */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 4px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Smooth transition */
+  position: sticky;
+  left: 90%;
+  top: 95%; 
+}
+.removeTeam:hover {
+  box-shadow: 0 0 30px red;
+}
+
+.metricInput {
+  width: 100%;
+}
+
+.metricDropdown {
+  text-align: center;
+  min-width: 50%;
+  max-width: max-content;
+  margin: 20px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  border-radius: 10px;
+}
+
+
+.loginContainer {
+  background-color: #000;
+}
+
+.containerLogin {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background-color: #f9f9f9;
+}
+
+.wrapLogin {
+  width: 390px;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 77px 55px 33px 55px;
+  /* box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.2); */
+}
+
+.loginForm {
+  width: 100%;
+}
+
+.loginFormTitle {
+  font-family: Nunito, sans-serif;
+  display: block;
+  font-size: 30px;
+  color: #4F2C60;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.loginFormTitle img {
+  width: 90px;
+}
+
+.wrapInput {
+  width: 100%;
+  position: relative;
+  border-bottom: 2px solid #000;
+  margin-bottom: 37px;
+}
+
+.input {
+  font-size: 15px;
+  color: #fff;
+  line-height: 1.2;
+  border: none;
+  display: block;
+  width: 100%;
+  height: 45px;
+  background-color: transparent;
+  padding: 0 5px;
+  font-family: Nunito, sans-serif;
+}
+
+.loginContainer {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.containerLogin {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+.focusInput {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  color: #adadad;
+  font-family: Nunito, sans-serif;
+}
+
+.focusInput::before {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+  background: #6a7dfe;
+  background: -webkit-linear-gradient(to left, #21d4fd, #b721ff);
+  background: -o-linear-gradient(to left, #21d4fd, #b721ff);
+  background: -moz-linear-gradient(to left, #21d4fd, #b721ff);
+  background: linear-gradient(to left, #21d4fd, #b721ff);
+}
+
+.focusInput::after {
+  font-family: Nunito, sans-serif;
+  font-size: 15px;
+  color: #999999;
+  line-height: 1.2;
+  content: attr(data-placeholder);
+  display: block;
+  width: 100%;
+  position: absolute;
+  top: 16px;
+  left: 0px;
+  padding-left: 5px;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.input:focus {
+  outline: 0;
+}
+
+.input:focus+.focusInput::after {
+  top: -15px;
+}
+
+.input:focus+.focusInput::before {
+  width: 100%;
+}
+
+.has-val+.focusInput::after {
+  top: -15px;
+}
+
+.has-val+.focusInput::before {
+  width: 100%;
+}
+
+.containerLoginFormBtn {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-bottom: 13px;
+}
+
+.loginFormBtn {
+  font-size: 15px;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  line-height: 1.2;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background: #6a7dfe;
+  background: -webkit-linear-gradient(to left, #21d4fd, #b721ff);
+  background: -o-linear-gradient(to left, #21d4fd, #b721ff);
+  background: -moz-linear-gradient(to left, #21d4fd, #b721ff);
+  background: linear-gradient(to left, #21d4fd, #b721ff);
+}
+
+.loginFormBtn:hover {
+  cursor: pointer;
+}
+
+.textCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.txt1 {
+  font-size: 14px;
+  color: #adadad;
+  line-height: 1.5;
+  padding-right: 5px;
+}
+
+.txt2 {
+  font-size: 14px;
+  color: #6a7dfe;
+  line-height: 1.5;
+  text-decoration: none;
+}
