@@ -27,7 +27,7 @@ export default function Home() {
   const [customMetricLabel, setCustomMetricPassLabel] = useState("")
   const [customMetricValue, setCustomMetricPassValue] = useState("")
   const [savedDrawing, setSavedDrawing] = useState(null)
-  const [brushRadius, setBrushRadius] = useState(10)
+  const [brushRadius, setBrushRadius] = useState(5)
   const [brushColour, setBrushColour] = useState('black')
   const [access, setAccess] = useState(false)
   const [pass, setPass] = useState("")
@@ -425,6 +425,7 @@ export default function Home() {
             <label>Brush-Radius:</label>
             <input
               type="number"
+              min="1"
               value={brushRadius}
               onChange={e =>
                 setBrushRadius(e.target.value)
