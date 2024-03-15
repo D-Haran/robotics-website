@@ -498,7 +498,7 @@ export default function Home() {
             </span>
 
             <div className={styles.wrapInput}>
-              <input onChange={(e) => {setPass(e.target.value)}}/>
+              <input className={styles.passwordInput} placeholder='Password' onChange={(e) => {setPass(e.target.value)}}/>
               <span className={styles.focusInput} data-placeholder="Password"></span>
             </div>
 
