@@ -24,7 +24,7 @@ export default function Home() {
   const [metricValue, setMetricValue] = useState("")
   const [customMetricLabel, setCustomMetricPassLabel] = useState("")
   const [customMetricValue, setCustomMetricPassValue] = useState("")
-  const metrics = ["Autonomous", "Balancing Autonomous", "Placing Items", "Drivebase", "Years Of Experience", "Notes"]
+  const metrics = ["Autonomous", "Spekaer", "Amp", "climb", "Drivebase", "Years Of Experience", "Notes"]
 
   const customStyles = {
     content: {
