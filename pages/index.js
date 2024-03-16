@@ -471,18 +471,18 @@ export default function Home() {
 
               </div>
             
-          <div >
-              <CanvasDraw className={styles.map}
+          <div className={styles.map}>
+              <CanvasDraw 
               disabled={role == "editor" ? false : true}
-              canvasWidth={1000}
-              canvasHeight={650}
+              canvasWidth={1025}
+              canvasHeight={487}
               hideGrid={true} 
               brushColor={brushColour} 
               saveData={savedDrawing} 
               ref={canvas} 
               enablePanAndZoom
               clampLinesToDocument 
-              loadTimeOffset={1} 
+              loadTimeOffset={3} 
               imgSrc={'/static/map.png'} 
               brushRadius={brushRadius} 
               lazyRadius={0}/> 
