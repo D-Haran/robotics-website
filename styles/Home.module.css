@@ -70,6 +70,17 @@
     justify-content: center;
 }
 
+.canvasTools {
+  padding: 5px;
+  border-radius: 10px;
+  border: solid 2px #8700E7;
+  background-color: #000;
+}
+
+.toolsContainer {
+  text-align: center;
+}
+
 .gridStat:hover .removeTeam{
   display: block;
 }

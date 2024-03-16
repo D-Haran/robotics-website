@@ -28,7 +28,7 @@ export default function Home() {
   const [customMetricValue, setCustomMetricPassValue] = useState("")
   const [savedDrawing, setSavedDrawing] = useState(null)
   const [brushRadius, setBrushRadius] = useState(5)
-  const [brushColour, setBrushColour] = useState('black')
+  const [brushColour, setBrushColour] = useState('#0000FF')
   const [access, setAccess] = useState(false)
   const [pass, setPass] = useState("")
   const canvas = useRef();
@@ -422,8 +422,10 @@ export default function Home() {
             <div className={styles.subColumn}>
               <h2 className={styles.titles}><u>MAP</u></h2>
               <div>
-            <label>Brush-Radius:</label>
+              <div className={styles.toolsContainer}>
+<label>Brush-Radius:</label>
             <input
+            className={styles.canvasTools}
               type="number"
               min="1"
               value={brushRadius}
@@ -432,12 +434,25 @@ export default function Home() {
               }
             />
           </div>
+          <label>Colour picker: </label>
+      <input
+        type="color"
+
+        value={brushColour}
+        onChange={(event) => {
+          console.log(event.target.value);
+          setBrushColour(event.target.value);
+        }}
+      />
+      <br />
           <button
+          className={styles.canvasTools}
             onClick={saveImageData}
           >
             Save
           </button>
           <button
+          className={styles.canvasTools}
             onClick={() => {
               canvas.current.eraseAll();
             }}
@@ -445,21 +460,17 @@ export default function Home() {
             Erase
           </button>
           <button
+          className={styles.canvasTools}
             onClick={() => {
               canvas.current.undo();
             }}
           >
             Undo
           </button>
-          <label>Colour picker</label>
-      <input
-        type="color"
-        value={brushColour}
-        onChange={(event) => {
-          console.log(event.target.value);
-          setBrushColour(event.target.value);
-        }}
-      />
+          
+
+              </div>
+            
           <div >
               <CanvasDraw className={styles.map}
               disabled={role == "editor" ? false : true}
