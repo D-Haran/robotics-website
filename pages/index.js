@@ -31,10 +31,21 @@ export default function Home() {
   const [brushColour, setBrushColour] = useState('#0000FF')
   const [access, setAccess] = useState(false)
   const [pass, setPass] = useState("")
+  const [search, setSearch] = useState("")
+  const [expanded, setExpanded] = useState(false)
+  const [originalTeams, setOriginalTeams] = useState([])
   const canvas = useRef();
   const metrics = ["Autonomous", "Balancing Autonomous", "Placing Items", "Drivebase", "Years Of Experience", "Notes"]
 
-
+  const multipleSearch = (array) => {
+    setTeamNumberList(originalTeams.filter(
+    (el) => 
+    el.includes(search)))
+    }
+  
+    useEffect(() => {
+      multipleSearch(teamNumberList)
+    }, [search])
 
   const customStyles = {
     content: {
@@ -73,6 +84,18 @@ export default function Home() {
       }
   }
 
+  useEffect(() => {
+    if (expanded) {
+      document.getElementById("main").style.display = "block";
+      document.getElementById("main").style.overflow = "auto";
+    }
+    else if (!expanded) {
+      document.getElementById("main").style.display = "grid";
+      document.getElementById("main").style.gridTemplateColumns = "1fr 3fr";
+    }
+    console.log(expanded)
+  }, [expanded])
+
   const getTeamData = async(teamNumber) => {
       const docRef = doc(db, 'teams', '6866', 'other_teams', teamNumber);
       const docSnap = await getDoc(docRef);
@@ -88,6 +111,7 @@ export default function Home() {
     docSnap.forEach(doc => {
       teams[doc.id] = doc.data()
       setTeamNumberList(Object.keys(teams))
+      setOriginalTeams(Object.keys(teams))
     })
   }
 
@@ -147,7 +171,7 @@ export default function Home() {
 
   useEffect(() => {
     getImageData()
-  }, [])
+  }, [expanded])
 
   useEffect(() => {setAccess(localStorage.getItem('access'))}, [])
 
@@ -158,11 +182,13 @@ export default function Home() {
         <meta name="description" content="Markham Robotics" />
       </Head>
 
-      <main className={styles.main}>
+      <main className={styles.main} id="main">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />  
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
-      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
       {access && 
         <Fragment>
 <Fragment>
@@ -365,11 +391,13 @@ export default function Home() {
         
       <div className={styles.column}>
           <h2 className={styles.titles}><u>TEAMS</u></h2>
+          <input onChange={(e) => {setSearch(e.target.value)}} className={styles.search} placeholder={'Search for team'}/>
           <div className={styles.metricContainer}>
           {role == "editor" &&
             <motion.div className={styles.addTeam} animate={{scale: 1}} transition={{ delay: 0.01 }}
             initial={{scale:0.5}} onClick={openModal}>+</motion.div>
         }
+        
         <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -380,6 +408,23 @@ export default function Home() {
         <input maxLength={5} onChange={(e) => {setTeamNumber(e.target.value); console.log(e.target.value)}} placeholder='TEAM NUMBER'/>
         <button onClick={() => {addTeam(teamNumber); closeModal()}}>Submit</button>
       </Modal>
+      <motion.div className={styles.gridStat} animate={{scale: 1}}
+              initial={{scale:0.75}} whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }} onClick={() => {setExpanded(!expanded)}}>
+                {!expanded &&
+                <Metrics metric={<span class="material-symbols-outlined">
+                open_in_full
+                </span>} />
+                }
+                {expanded &&
+                <Metrics metric={<span class="material-symbols-outlined">
+                close_fullscreen
+                </span>} />
+                }
+                
+              </motion.div>
+      
+        
           {teamNumberList.map((item, idx) => {
             return(
               <motion.div className={styles.gridStat} key={idx} animate={{scale: 1}}
@@ -391,9 +436,7 @@ export default function Home() {
           })}
           </div>
         </div>
-
-        <div className={styles.column}>
-        {role == "editor" &&
+{role == "editor" &&
           <Image className={styles.dropdown} onClick={() => {
               setRole("viewer")}} alt="Profile" src="/static/profile-photo-edit.png" width={100} height={100}></Image>
         }
@@ -401,7 +444,9 @@ export default function Home() {
           <Image className={styles.dropdown} onClick={() => {
               setRole("editor")}} alt="Profile" src="/static/profile-photo.png" width={100} height={100}></Image>
         }
-        
+
+      {!expanded && 
+      <div className={styles.column}>
         <div className={styles.split}>
             <div className={styles.subColumn1}>
             {
@@ -419,6 +464,7 @@ export default function Home() {
             }
               
             </div>
+          
             <div className={styles.subColumn}>
               <h2 className={styles.titles}><u>MAP</u></h2>
               <div>
@@ -470,8 +516,7 @@ export default function Home() {
           
 
               </div>
-            
-          <div className={styles.map}>
+            <div className={styles.map}>
               <CanvasDraw 
               disabled={role == "editor" ? false : true}
               canvasWidth={1025}
@@ -487,11 +532,16 @@ export default function Home() {
               brushRadius={brushRadius} 
               lazyRadius={0}/> 
           </div>
+            
           
-            </div>
+
+            </div> 
+          
           </div>
         </div>
+      }
         
+     
           
 
         </Fragment>
