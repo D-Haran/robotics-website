@@ -197,7 +197,7 @@ export default function Home() {
             <Fragment>
                 {
                   collapsible == false &&
-                  <motion.div className={styles.column3} animate={{x: 0}} initial={{x:"50%"}}>
+                  <motion.div id="column3" className={styles.column3} animate={{x: 0}} initial={{x:"50%"}}>
                   <motion.button onClick={() => {setCollapsible(!collapsible)}} className={styles.collapse}  animate={{scale: 1}}
                   initial={{scale:0}}>
                   <span class="material-symbols-outlined">
@@ -394,8 +394,11 @@ export default function Home() {
           <input onChange={(e) => {setSearch(e.target.value)}} className={styles.search} placeholder={'Search for team'}/>
           <div className={styles.metricContainer}>
           {role == "editor" &&
-            <motion.div className={styles.addTeam} animate={{scale: 1}} transition={{ delay: 0.01 }}
-            initial={{scale:0.5}} onClick={openModal}>+</motion.div>
+            <motion.div className={styles.addTeam} animate={{scale: 1}}
+            initial={{scale:0.5}} whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.6 }} onClick={openModal}>
+              <Metrics metric={"+"} />
+            </motion.div>
         }
         
         <Modal
