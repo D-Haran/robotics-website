@@ -171,7 +171,7 @@ export default function Home() {
 
   useEffect(() => {
     getImageData()
-  }, [expanded])
+  }, [])
 
   useEffect(() => {setAccess(localStorage.getItem('access'))}, [])
 
