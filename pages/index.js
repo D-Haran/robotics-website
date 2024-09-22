@@ -570,6 +570,9 @@ export default function Home() {
             <div className={styles.containerLoginFormBtn}>
               <button className={styles.loginFormBtn}>Login</button>
             </div>
+            <div className={styles.containerLoginFormBtn}>
+              <button className={styles.loginFormBtn} onClick={() => {localStorage.setItem('access', true); setAccess(true)}}>Guest Login (For Beta Testing)</button>
+            </div>
 
             
           </form>
