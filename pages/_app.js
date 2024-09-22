@@ -6,7 +6,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <Fragment>
       <Head>
-      <title>Markham Space Invaders - Competition Site</title>
+      <title>Omiris - Data Analytics Competition Site</title>
       <link rel="shortcut icon" href="/static/logo.jpg" />
     </Head>
     <Component {...pageProps} />
